@@ -81,6 +81,7 @@ bool Si4432::init() {
 	byte syncWord2 = ReadRegister(REG_SYNC_WORD2);
 	byte syncWord1 = ReadRegister(REG_SYNC_WORD1);
 	byte syncWord0 = ReadRegister(REG_SYNC_WORD0);
+#ifdef DEBUG
 	Serial.print("syncWord3=");
 	Serial.print(syncWord3, HEX);
 	Serial.print(" syncWord2=");
@@ -90,9 +91,9 @@ bool Si4432::init() {
 	Serial.print(" syncWord0=");
 	Serial.print(syncWord0, HEX);
 	Serial.println();
+#endif
 	
-	if (syncWord3 != 0x2D || syncWord2 != 0xD4) return false;
-	return true;
+	return ( 0x2D == syncWord3 && 0xD4 == syncWord2 ) ? true : false;
 }
 
 void Si4432::boot() {
